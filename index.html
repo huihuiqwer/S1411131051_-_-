@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>歲時的舌尖記憶：台灣原民土地與海洋的永續饗宴</title>
+    <style>
+        /* 全局變數與基礎設定 */
+        :root {
+            --primary-color: #1b4d3e;    /* 叢林綠 Jungle Green */
+            --secondary-color: #2a6f55;  /* 亮叢林綠 */
+            --accent-color: #d4a373;     /* 暖沙土/月桃黃 */
+            --bg-color: #f4f7f5;         /* 清新灰白背景 */
+            --text-color: #2b2d42;       /* 深石板灰 */
+            --white: #ffffff;
+            --dark-green: #0f3026;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Microsoft JhengHei", Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.7;
+            padding-top: 80px;
+            padding-bottom: 70px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 頁首導覽列 */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+        }
+
+        header .logo {
+            font-size: 1.25rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        header nav {
+            display: flex;
+            gap: 15px;
+        }
+
+        header nav a {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+
+        header nav a:hover, header nav a.active {
+            color: var(--primary-color);
+            background-color: var(--white);
+        }
+
+        /* 頁尾固定欄 */
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--dark-green);
+            color: rgba(255, 255, 255, 0.85);
+            text-align: center;
+            padding: 15px;
+            font-size: 0.95rem;
+            z-index: 1000;
+            letter-spacing: 2px;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            font-weight: bold;
+        }
+
+        /* 主要內容容器 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            flex: 1;
+            width: 100%;
+        }
+
+        /* 區塊顯示控制 */
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ==========================================
+           首頁版面：左右分邊架構
+           ========================================== */
+        .home-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .home-intro {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: var(--white);
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .home-intro h1 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-size: 2.2rem;
+        }
+
+        .home-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* 完美切分左右兩邊 */
+            gap: 35px;
+            min-height: 55vh;
+        }
+
+        .home-panel {
+            background-color: var(--white);
+            border-radius: 12px;
+            padding: 40px 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 左邊故事線面板 */
+        .panel-story {
+            border-top: 8px solid var(--primary-color);
+            background-linear: linear-gradient(180deg, #ffffff 0%, #f0f7f4 100%);
+        }
+
+        /* 右邊純展品介紹面板 */
+        .panel-exhibit {
+            border-top: 8px solid var(--accent-color);
+            background-linear: linear-gradient(180deg, #ffffff 0%, #fdf9f5 100%);
+        }
+
+        .home-panel:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+        }
+
+        .panel-icon {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+        }
+
+        .home-panel h2 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: var(--text-color);
+        }
+
+        .panel-story h2 { color: var(--primary-color); }
+        .panel-exhibit h2 { color: #b57c43; }
+
+        .home-panel p {
+            font-size: 1.05rem;
+            color: #555;
+            margin-bottom: 35px;
+            text-align: justify;
+            max-width: 450px;
+        }
+
+        /* 通用按鈕 */
+        .btn {
+            display: inline-block;
+            padding: 12px 35px;
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .btn-story {
+            background-color: var(--primary-color);
+        }
+
+        .btn-story:hover {
+            background-color: var(--secondary-color);
+            transform: scale(1.05);
+        }
+
+        .btn-exhibit {
+            background-color: var(--accent-color);
+            color: #4a3319;
+        }
+
+        .btn-exhibit:hover {
+            background-color: #c49261;
+            transform: scale(1.05);
+        }
+
+        /* ==========================================
+           故事線區塊 (Suyan 的一天)
+           ========================================== */
+        .story-wrapper {
+            background-color: var(--white);
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+        }
+
+        /* 故事子分頁控制 */
+        .story-step {
+            display: none;
+        }
+
+        .story-step.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .story-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #edf2f0;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+
+        .story-header h3 {
+            font-size: 1.6rem;
+            color: var(--primary-color);
+        }
+
+        .time-badge {
+            background-color: var(--accent-color);
+            color: #4a3319;
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.95rem;
+        }
+
+        .story-body {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .story-img-box img {
+            width: 100%;
+            height: 380px;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.5s ease;
+        }
+
+        .story-text h4 {
+            font-size: 1.35rem;
+            margin-bottom: 15px;
+            color: var(--secondary-color);
+        }
+
+        .story-text p {
+            margin-bottom: 20px;
+            color: #444;
+            text-align: justify;
+            font-size: 1.05rem;
+        }
+
+        /* 故事線導覽按鈕 */
+        .story-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            border-top: 1px solid #edf2f0;
+            padding-top: 25px;
+        }
+
+        .btn-nav {
+            padding: 10px 25px;
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-nav:hover { background-color: #5a6268; }
+        .btn-nav.btn-next { background-color: var(--primary-color); }
+        .btn-nav.btn-next:hover { background-color: var(--secondary-color); }
+
+        /* 互動點 A 特效 */
+        .interactive-a {
+            background: #f8faf9;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .toggle-group {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .btn-toggle {
+            padding: 8px 20px;
+            border: 2px solid var(--primary-color);
+            background: transparent;
+            color: var(--primary-color);
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-toggle.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* 互動點 B 特效 */
+        .interactive-b {
+            background: #fdfdfd;
+            padding: 25px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border-left: 4px solid var(--accent-color);
+            box-shadow: inset 0 0 5px rgba(0,0,0,0.02);
+        }
+
+        .slider-box {
+            margin: 15px 0;
+        }
+
+        .range-slider {
+            width: 100%;
+            margin: 15px 0;
+            accent-color: var(--primary-color);
+            cursor: pointer;
+        }
+
+        .slider-labels {
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .slider-output-desc {
+            background: #fdf9f5;
+            padding: 12px;
+            border-radius: 6px;
+            margin-top: 10px;
+            font-size: 0.95rem;
+            color: #555;
+            border: 1px dashed var(--accent-color);
+        }
+
+        /* 互動點 C 特效 */
+        .interactive-c {
+            background: #fffaf5;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border-left: 4px solid #e76f51;
+        }
+
+        .btn-deconstruct {
+            background-color: #e76f51;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-deconstruct:hover { background-color: #d65d40; }
+
+        .layer-display {
+            margin-top: 15px;
+        }
+
+        .layer-item {
+            background: white;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 6px;
+            border-left: 4px solid #e76f51;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+            display: none;
+            animation: slideIn 0.4s forwards;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-15px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* ==========================================
+           純展品介紹區塊
+           ========================================== */
+        .exhibit-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .exhibit-card-full {
+            background: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+            display: flex;
+            flex-direction: column;
+            border-bottom: 5px solid #eee;
+        }
+
+        .exhibit-card-full:nth-child(1) { border-bottom-color: var(--primary-color); }
+        .exhibit-card-full:nth-child(2) { border-bottom-color: var(--accent-color); }
+        .exhibit-card-full:nth-child(3) { border-bottom-color: #e76f51; }
+
+        .exhibit-card-full img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+
+        .exhibit-detail-box {
+            padding: 25px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .exhibit-detail-box h3 {
+            color: var(--primary-color);
+            margin-bottom: 5px;
+            font-size: 1.4rem;
+        }
+
+        .exhibit-tag {
+            font-size: 0.85rem;
+            color: #666;
+            background: #edf2f0;
+            padding: 3px 10px;
+            border-radius: 4px;
+            display: inline-block;
+            width: fit-content;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .exhibit-detail-box p {
+            font-size: 0.98rem;
+            color: #444;
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .exhibit-detail-box ul {
+            list-style: none;
+            margin-bottom: 20px;
+            font-size: 0.92rem;
+            background: #fafafa;
+            padding: 12px;
+            border-radius: 6px;
+        }
+
+        .exhibit-detail-box ul li {
+            margin-bottom: 6px;
+            color: #555;
+        }
+
+        .exhibit-detail-box ul li strong {
+            color: var(--text-color);
+        }
+
+        .link-source {
+            font-size: 0.88rem;
+            color: #b57c43;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: auto;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .link-source:hover { text-decoration: underline; }
+
+        /* RWD 響應式排版 */
+        @media (max-width: 900px) {
+            .home-grid, .story-body, .exhibit-grid {
+                grid-template-columns: 1fr;
+            }
+            body { padding-top: 130px; }
+            header { flex-direction: column; gap: 12px; text-align: center; padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 頁首導覽列 -->
+    <header>
+        <div class="logo">📡 數位策展展示網頁</div>
+        <nav>
+            <a onclick="switchSection('home')" id="nav-home" class="active">首頁</a>
+            <a onclick="switchSection('story')" id="nav-story">故事線之旅</a>
+            <a onclick="switchSection('exhibit')" id="nav-exhibit">純展品介紹</a>
+        </nav>
+    </header>
+
+    <!-- 主要內文區塊 -->
+    <main class="container">
+
+        <!-- ==========================================
+             1. 首頁區塊（包含要求之左右分邊架構）
+             ========================================== -->
+        <section id="home" class="section active">
+            <div class="home-container">
+                <div class="home-intro">
+                    <h1>歲時的舌尖記憶</h1>
+                    <p>台灣原民土地與海洋的永續饗宴 — 數位典藏與互動展示</p>
+                </div>
+                
+                <!-- 左右分邊主要通道 -->
+                <div class="home-grid">
+                    
+                    <!-- 左半邊：故事線入口 -->
+                    <div class="home-panel panel-story">
+                        <div class="panel-icon">🌅</div>
+                        <h2>一位原住民的一天</h2>
+                        <p>透過蘭悟族青年 Suyan 的視角，體驗從清晨出海準備、中午採收水芋午餐，到傍晚共聚部落收穫祭典的完整生命故事流。將傳統飲食工藝與歲時汛期完美結合。</p>
+                        <button class="btn btn-story" onclick="startStory()">開啟故事線之旅 &rarr;</button>
+                    </div>
+
+                    <!-- 右半邊：純展品介紹入口 -->
+                    <div class="home-panel panel-exhibit">
+                        <div class="panel-icon">🏷️</div>
+                        <h2>純粹展品介紹</h2>
+                        <p>跳脫時間主軸，直接進入數位典藏物件核心。在此您可以清晰查閱「飛魚乾」、「水芋與甘藷」以及「慶典阿粨」的專業後設資料（Metadata）描述、背景製程與文獻出處。</p>
+                        <button class="btn btn-exhibit" onclick="switchSection('exhibit')">進入展品快速通道 &rarr;</button>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================
+             2. 故事線區塊 (下一頁導覽架構)
+             ========================================== -->
+        <section id="story" class="section">
+            <div class="story-wrapper">
+                
+                <!-- 故事階段 1：清晨 -->
+                <div id="step-1" class="story-step active">
+                    <div class="story-header">
+                        <h3>第一站：清晨的灶腳（起床與工作準備）</h3>
+                        <span class="time-badge">AM 05:30</span>
+                    </div>
+                    <div class="story-body">
+                        <div class="story-img-box">
+                            <img id="fish-img" src="飛魚乾鹽日曬法.jpg" alt="飛魚乾">
+                        </div>
+                        <div class="story-text">
+                            <h4>飛魚乾（Arayu）的柴燻工藝</h4>
+                            <p>天剛破曉，達悟青年 Suyan 在傳統地下屋醒來。為了今日長途捕魚與田間勞作，必須檢視耐存放的生存食糧。他走到屋外的魚架旁，處理昨日捕獲的飛魚。</p>
+                            
+                            <!-- 互動點 A 實作 -->
+                            <div class="interactive-a">
+                                <h5>💡 互動點 A：動態製程切換（點擊體驗）</h5>
+                                <p style="font-size:0.9rem; color:#666; margin-bottom:10px;">點擊下方按鈕，切換日間與夜間的不同保存工藝：</p>
+                                <div class="toggle-group">
+                                    <button id="toggle-sun" class="btn-toggle active" onclick="setFishMode('sun')">日間鹽日曬</button>
+                                    <button id="toggle-smoke" class="btn-toggle" onclick="setFishMode('smoke')">夜間柴火燻</button>
+                                </div>
+                                <p id="fish-desc" style="font-style: italic; color: var(--primary-color); font-weight: bold;">【鹽日曬法】在拼板舟上刮除魚鱗並取出內臟，清洗抹鹽後，日間掛在海岸魚架上接受陽光強烈曝曬脫水。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 故事階段 2：中午 -->
+                <div id="step-2" class="story-step">
+                    <div class="story-header">
+                        <h3>第二站：海洋與田間（出海捕魚與婦女勞動）</h3>
+                        <span class="time-badge">PM 12:00</span>
+                    </div>
+                    <div class="story-body">
+                        <div class="story-img-box">
+                            <img src="水芋田.jpg" alt="水芋田">
+                        </div>
+                        <div class="story-text">
+                            <h4>主食水芋（Soli）與甘藷（Wakei）</h4>
+                            <p>中午時分，Suyan 推著拼板舟從黑潮歸來；與此同時，家族中的婦女也從細心灌溉的水芋田中採收而歸。全家人聚集在一起，烹煮水芋塊莖，搭配早先準備好的飛魚乾作為扎實的午餐。芋田的管理，正衡量著家庭的勤勞與福份。</p>
+                            
+                            <!-- 互動點 B 實作 -->
+                            <div class="interactive-b">
+                                <h5>💡 互動點 B：歲時汛期時間軸（拖動滑桿）</h5>
+                                <div class="slider-box">
+                                    <div class="slider-labels">
+                                        <span>3-4月 (招魚祭)</span>
+                                        <span>6-7月 (收藏祭)</span>
+                                        <span>9月 (終食祭)</span>
+                                    </div>
+                                    <input type="range" min="3" max="9" step="3" value="6" class="range-slider" id="seasonSlider" oninput="updateSeason(this.value)">
+                                </div>
+                                <div class="slider-output-desc" id="season-desc">
+                                    <strong>當前時令：6-7月【飛魚收藏祭】</strong><br>此時為盛產收穫祭，婦女特別掘取新鮮水芋與甘藷，與飛魚乾一同大量烹煮，供全家及親族共享，慶祝海洋與大地的豐收。
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 故事階段 3：傍晚慶典 -->
+                <div id="step-3" class="story-step">
+                    <div class="story-header">
+                        <h3>第三站：部落的慶典（歲時感恩分享）</h3>
+                        <span class="time-badge">PM 18:30</span>
+                    </div>
+                    <div class="story-body">
+                        <div class="story-img-box">
+                            <img src="abai2.jpg" alt="阿粨">
+                        </div>
+                        <div class="story-text">
+                            <h4>原民傳統慶典美食：阿粨（A-bai）</h4>
+                            <p>夜幕低垂，部落迎來了盛大的感恩收穫祭。婦女們齊聚一堂，一邊吟唱傳統歌謠，一邊熟練地包裹著阿粨。這是排灣族、魯凱族與卑南族等原住民在重大祭典、婚禮或迎賓時最神聖的食物，包裹著對土地的虔敬與凝聚部落女力的故事。</p>
+                            
+                            <!-- 互動點 C 實作 -->
+                            <div class="interactive-c">
+                                <h5>💡 互動點 C：阿粨結構動態解構（點擊探索）</h5>
+                                <p style="font-size:0.9rem; color:#666; margin-bottom:10px;">點擊按鈕層層剝開阿粨，理解原民飲食的生活智慧：</p>
+                                <button class="btn-deconstruct" onclick="deconstructAbai()">層層解構阿粨</button>
+                                <div class="layer-display" id="layerDisplay">
+                                    <div class="layer-item" id="layer-1"><strong>【第一層：外包裹 - 月桃葉】</strong> 提供獨特香氣並定型，耐蒸煮，食用前需剝除。</div>
+                                    <div class="layer-item" id="layer-2"><strong>【第二層：內靈魂 - 假酸漿葉】</strong> 核心精華！富含高纖維與葉綠素，老獵人的保鮮智慧。可與內餡一同吃下，具整腸、消除脹氣防不適之神奇功效。</div>
+                                    <div class="layer-item" id="layer-3"><strong>【第三層：核心內餡 - 小米與山豬肉】</strong> 經木杵搗實的小米與新鮮豬肉完美融合，象徵慶典的豐收。</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 故事線下方導覽鈕 -->
+                <div class="story-navigation">
+                    <button class="btn-nav" id="btn-prev" onclick="moveStory(-1)">&larr; 上一頁</button>
+                    <button class="btn-nav btn-next" id="btn-next" onclick="moveStory(1)">下一頁 &rarr;</button>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ==========================================
+             3. 純展品介紹區塊
+             ========================================== -->
+        <section id="exhibit" class="section">
+            <h2 style="color:var(--primary-color); margin-bottom:10px; text-align:center;">典藏展品全面觀</h2>
+            <p style="text-align:center; color:#666; margin-bottom:30px;">跳脫時間主軸，靜態查閱三大經典傳統美食的文化背景與典藏來源</p>
+            
+            <div class="exhibit-grid">
+                
+                <!-- 展品 1 -->
+                <div class="exhibit-card-full">
+                    <img src="fish.jpg" alt="飛魚乾">
+                    <div class="exhibit-detail-box">
+                        <h3>達悟族柴燻飛魚乾</h3>
+                        <span class="exhibit-tag">識別碼：NDAM-2026-FD001</span>
+                        <p>經由刮鱗、去內臟、劃刀抹鹽後，以白天日曬、夜晚柴火燻製而成的魚乾，為達悟族歲時重要戰略與文化物資。</p>
+                        <ul>
+                            <li><strong>捕魚季節：</strong> 每年 3 月至 8 月期間。</li>
+                            <li><strong>製作工藝：</strong> 鹽日曬法與柴火慢燻。</li>
+                            <li><strong>出版單位：</strong> 行政院農業部農業兒童網</li>
+                        </ul>
+                        <a href="https://kids.moa.gov.tw/view.php?func=knowledge&subfunc=kids_knowledge&category=C10&id=95" target="_blank" class="link-source">🌐 查看原始典藏來源網頁</a>
+                    </div>
+                </div>
+
+                <!-- 展品 2 -->
+                <div class="exhibit-card-full">
+                    <img src="taro.jpg" alt="水芋">
+                    <div class="exhibit-detail-box">
+                        <h3>蘭嶼水芋（Soli）與甘藷</h3>
+                        <span class="exhibit-tag">識別碼：NDAM-2026-TS002</span>
+                        <p>蘭嶼婦女於落差水芋田中細心灌溉採收之傳統核心主食塊莖，為部落收穫祭核心供品與日常能量來源。</p>
+                        <ul>
+                            <li><strong>產季節慶：</strong> 農曆 5 月盛產，配合收穫祭。</li>
+                            <li><strong>文化核心：</strong> 由婦女全權管理主導之勞動價值。</li>
+                            <li><strong>出版單位：</strong> 臺灣原住民族圖書資訊中心</li>
+                        </ul>
+                        <a href="https://greenmedia.today/article_detail.php?cid=241&mid=1236" target="_blank" class="link-source">🌐 查看原始典藏來源網頁</a>
+                    </div>
+                </div>
+
+                <!-- 展品 3 -->
+                <div class="exhibit-card-full">
+                    <img src="abai.jpg" alt="阿粨">
+                    <div class="exhibit-detail-box">
+                        <h3>原民傳統小米阿粨（A-bai）</h3>
+                        <span class="exhibit-tag">識別碼：NDAM-2026-AB003</span>
+                        <p>以月桃葉包裹外層提供清香、假酸漿葉包裹內層提供整腸消脹氣機能之慶典與豐年祭指標性传统分享食物。</p>
+                        <ul>
+                            <li><strong>適用場合：</strong> 豐年祭、婚禮、迎接貴賓。</li>
+                            <li><strong>材料智慧：</strong> 假酸漿葉富含高纖維可一同食用。</li>
+                            <li><strong>出版單位：</strong> 臺東縣政府萬物糧倉計畫辦公室</li>
+                        </ul>
+                        <a href="https://www.pioneeringeastriftvalleygranaryfestivities.com.tw/2019/06/10/%E7%B2%A8%E7%99%BC%E7%B2%A8%E7%B2%BD/" target="_blank" class="link-source">🌐 查看原始典藏來源網頁</a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 頁尾固定欄 (林峰陞同學 規格標記) -->
+    <footer>
+        S1411131051_林峰陞_期末報告
+    </footer>
+
+    <!-- JavaScript 交互邏輯控制 -->
+    <script>
+        // 區塊切換邏輯
+        function switchSection(sectionId) {
+            // 隱藏所有大區塊
+            document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+            // 移除導覽列所有 active 狀態
+            document.querySelectorAll('header nav a').forEach(nav => nav.classList.remove('active'));
+            
+            // 顯示指定區塊
+            document.getElementById(sectionId).classList.add('active');
+            // 亮起對應導覽紐
+            document.getElementById('nav-' + sectionId).classList.add('active');
+            
+            // 若切換回首頁，重置故事線指標
+            if(sectionId === 'home') {
+                currentStep = 1;
+                showStoryStep(currentStep);
+            }
+        }
+
+        // 故事線內部換頁控制
+        let currentStep = 1;
+        const totalSteps = 3;
+
+        function startStory() {
+            switchSection('story');
+            currentStep = 1;
+            showStoryStep(currentStep);
+        }
+
+        function showStoryStep(step) {
+            document.querySelectorAll('.story-step').forEach(s => s.classList.remove('active'));
+            document.getElementById('step-' + step).classList.add('active');
+            
+            // 控制上一頁 / 下一頁按鈕的文字與顯示
+            const prevBtn = document.getElementById('btn-prev');
+            const nextBtn = document.getElementById('btn-next');
+            
+            if (step === 1) {
+                prevBtn.style.visibility = 'hidden';
+            } else {
+                prevBtn.style.visibility = 'visible';
+            }
+            
+            if (step === totalSteps) {
+                nextBtn.innerText = '看完了！返回首頁';
+            } else {
+                nextBtn.innerText = '下一頁 →';
+            }
+        }
+
+        function moveStory(direction) {
+            currentStep += direction;
+            if (currentStep > totalSteps) {
+                switchSection('home');
+            } else if (currentStep < 1) {
+                currentStep = 1;
+            } else {
+                showStoryStep(currentStep);
+            }
+        }
+
+        // 互動點 A：飛魚乾製程切換
+        function setFishMode(mode) {
+            const img = document.getElementById('fish-img');
+            const desc = document.getElementById('fish-desc');
+            const sunBtn = document.getElementById('toggle-sun');
+            const smokeBtn = document.getElementById('toggle-smoke');
+            
+            if (mode === 'sun') {
+                sunBtn.classList.add('active');
+                smokeBtn.classList.remove('active');
+                desc.innerHTML = "【鹽日曬法】在拼板舟上刮除魚鱗並取出內臟，清洗抹鹽後，日間掛在海岸魚架上接受陽光強烈曝曬脫水。";
+                img.style.filter = "brightness(1) contrast(1)";
+            } else {
+                smokeBtn.classList.add('active');
+                sunBtn.classList.remove('active');
+                desc.innerHTML = "【夜間柴火燻製】夜間將飛魚移至地下屋內爐灶上方，利用柴火（如九芎樹枝）產生之濃煙進行慢燻，能防蟲、防霉並賦予魚肉獨特煙燻風味。";
+                img.style.filter = "brightness(0.7) sepia(0.3) saturate(1.2)";
+            }
+        }
+
+        // 互動點 B：水芋月份滑桿
+        function updateSeason(val) {
+            const desc = document.getElementById('season-desc');
+            if (val == 3) {
+                desc.innerHTML = "<strong>當前時令：3-4月【飛魚招魚祭（Meyvanwa）】</strong><br>揭開飛魚季序幕。此時黑潮帶來首批飛魚，族人被允許在夜間以火把或火炬捕魚（火漁）。主食常搭配耐旱之甘藷（Wakei）。";
+            } else if (val == 6) {
+                desc.innerHTML = "<strong>當前時令：6-7月【飛魚收藏祭】</strong><br>此時為盛產收穫祭，婦女特別掘取新鮮水芋與甘藷，與飛魚乾一同大量烹煮，供全家及親族共享，慶祝海洋與大地的豐收。";
+            } else if (val == 9) {
+                desc.innerHTML = "<strong>當前時令：9月中秋前後【飛魚終食祭】</strong><br>飛魚季正式宣告結束。此後全島完全停止食用飛魚，未吃完的飛魚乾需移除或丟棄。這項嚴格禁忌確保了海洋生態得以下一代繁衍，體現永續智慧。";
+            }
+        }
+
+        // 互動點 C：阿粨層層解構
+        let layerIndex = 0;
+        function deconstructAbai() {
+            layerIndex++;
+            if (layerIndex > 3) {
+                // 重置
+                document.querySelectorAll('.layer-item').forEach(item => item.style.display = 'none');
+                layerIndex = 0;
+            } else {
+                document.getElementById('layer-' + layerIndex).style.display = 'block';
+            }
+        }
+    </script>
+</body>
+</html>
